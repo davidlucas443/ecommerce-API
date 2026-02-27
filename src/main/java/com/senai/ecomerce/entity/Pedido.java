@@ -31,9 +31,11 @@ public class Pedido {
     @JoinColumn( name = "client_id")
     private Usuario cliente;
 
-    @ManyToOne
-    @JoinColumn( name = "pagamento_id")
-    private Pedido pagamento;
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private Pagamento pagamento;
+
+
+
 
 
 }

@@ -1,27 +1,29 @@
-package com.senai.ecomerce.entity;
+package com.senai.ecomerce.dto;
 
+import com.senai.ecomerce.entity.Pedido;
+import com.senai.ecomerce.entity.Usuario;
+import com.senai.ecomerce.enums.StatusDoPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.*;
 
-@Entity
+import java.time.LocalDate;
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pagamento {
+public class PedidoDto {
 
-    @Id
     private UUID id;
 
     private LocalDate momento;
 
-    @OneToOne
-    @MapsId //Faz com que o id do pedido seja o mesmo do pagamento
-    private Pedido pedido;
+    private StatusDoPedido status;
+
+
 }

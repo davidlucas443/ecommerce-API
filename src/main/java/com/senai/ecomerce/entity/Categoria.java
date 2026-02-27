@@ -17,14 +17,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Categoria {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String nome;
 
-    @ManyToMany(mappedBy = "categoria")
+    @ManyToMany(mappedBy = "categorias")
     private Set<Produto> produtos = new HashSet<>();
-
 }

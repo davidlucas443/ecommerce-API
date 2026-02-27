@@ -8,11 +8,11 @@ import lombok.Setter;
 
 import java.util.*;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Produto {
 
     @Id
@@ -20,15 +20,14 @@ public class Produto {
     private UUID id;
 
     private String descricao;
-
     private Double preco;
-
     private String imgUrl;
 
-    @ManyToMany()
-    @JoinTable (name = "tb_produto_categoria",
+    @ManyToMany
+    @JoinTable(
+            name = "tb_produto_categoria",
             joinColumns = @JoinColumn(name = "produto_id"),
-    inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    private Set<Categoria> categoria = new HashSet<>();
-
+            inverseJoinColumns = @JoinColumn(name = "categoria_id")
+    )
+    private Set<Categoria> categorias = new HashSet<>();
 }
