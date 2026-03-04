@@ -1,10 +1,8 @@
 package com.senai.ecomerce.controller;
 
-import com.senai.ecomerce.Service.PedidoService;
-import com.senai.ecomerce.Service.UsuarioService;
-import com.senai.ecomerce.dto.PagamentoDto;
-import com.senai.ecomerce.dto.UsuarioDto;
-import com.senai.ecomerce.entity.Usuario;
+import com.senai.ecomerce.dto.UsuarioResponseDto;
+import com.senai.ecomerce.service.UsuarioService;
+import com.senai.ecomerce.dto.UsuarioRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> create(@RequestBody UsuarioDto dto){
-        UsuarioDto novoUsuario = usuarioService.create(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    public ResponseEntity<UsuarioResponseDto> create(@RequestBody UsuarioRequestDto dto){
+        return ResponseEntity.ok(usuarioService.create(dto));
     }
 }

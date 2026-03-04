@@ -1,7 +1,5 @@
 package com.senai.ecomerce.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +11,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
-
-    private UUID id;
+public class UsuarioRequestDto {
 
     private String nome;
 
@@ -24,4 +20,6 @@ public class UsuarioDto {
     private String telefone;
 
     private String senha;
+
+
 }

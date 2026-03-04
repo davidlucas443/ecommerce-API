@@ -15,15 +15,18 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class PedidoDto {
 
-    private UUID id;
+    private UUID idUser;
 
     private LocalDate momento;
 
     private StatusDoPedido status;
 
-
+    public PedidoDto(Pedido pedido) {
+        this.idUser = pedido.getCliente().getId();
+        this.momento = pedido.getMomento();
+        this.status = pedido.getStatus();
+    }
 }

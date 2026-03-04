@@ -22,6 +22,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private UUID idUser;
+
     private LocalDate momento;
 
     @Enumerated(EnumType.STRING)
@@ -33,9 +35,5 @@ public class Pedido {
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
-
-
-
-
 
 }

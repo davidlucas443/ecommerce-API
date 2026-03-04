@@ -1,9 +1,7 @@
 package com.senai.ecomerce.controller;
 
-import com.senai.ecomerce.Service.PagamentoService;
-import com.senai.ecomerce.Service.UsuarioService;
+import com.senai.ecomerce.service.PagamentoService;
 import com.senai.ecomerce.dto.PagamentoDto;
-import com.senai.ecomerce.entity.Pagamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

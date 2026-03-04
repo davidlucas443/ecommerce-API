@@ -1,7 +1,5 @@
 package com.senai.ecomerce.controller;
 
-import com.senai.ecomerce.Service.PedidoService;
-import com.senai.ecomerce.dto.PagamentoDto;
 import com.senai.ecomerce.dto.PedidoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PedidoController {
 
     @Autowired
-    private PedidoService pedidoService;
+    private com.senai.ecomerce.Service.PedidoService pedidoService;
 
     @PostMapping
     public ResponseEntity<PedidoDto> create(@RequestBody PedidoDto dto){
