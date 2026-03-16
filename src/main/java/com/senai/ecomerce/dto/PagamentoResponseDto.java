@@ -1,7 +1,6 @@
 package com.senai.ecomerce.dto;
 
-
-import jakarta.persistence.Entity;
+import com.senai.ecomerce.entity.Pagamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +13,14 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PagamentoDto {
+public class PagamentoResponseDto {
 
     private UUID id;
-
     private LocalDate momento;
+
+    public PagamentoResponseDto(Pagamento pagamento) {
+        this.id = pagamento.getId();
+        this.momento = pagamento.getMomento();
+    }
 }
+

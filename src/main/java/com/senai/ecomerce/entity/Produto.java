@@ -30,4 +30,11 @@ public class Produto {
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
     private Set<Categoria> categorias = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.produto")
+    private Set< ItemDoPedido > items = new HashSet<>();
+
+    public List<Pedido> getPedido() {
+        return items.stream().map(ItemDoPedido::getPedido).toList();
+    }
 }

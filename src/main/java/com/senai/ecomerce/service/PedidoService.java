@@ -1,12 +1,17 @@
-package com.senai.ecomerce.Service;
+package com.senai.ecomerce.service;
 
-import com.senai.ecomerce.dto.PedidoDto;
+import com.senai.ecomerce.dto.ItemDoPedidoRequestDto;
+import com.senai.ecomerce.dto.PedidoRequestDto;
+import com.senai.ecomerce.dto.PedidoResponseDto;
+import com.senai.ecomerce.entity.ItemDoPedido;
 import com.senai.ecomerce.entity.Pagamento;
 import com.senai.ecomerce.entity.Pedido;
+import com.senai.ecomerce.entity.Produto;
 import com.senai.ecomerce.entity.Usuario;
 import com.senai.ecomerce.enums.StatusDoPedido;
 import com.senai.ecomerce.repositories.PagamentoRepository;
 import com.senai.ecomerce.repositories.PedidoRepository;
+import com.senai.ecomerce.repositories.ProdutoRepository;
 import com.senai.ecomerce.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -27,14 +32,18 @@ public class PedidoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
     @Transactional
-    public PedidoDto create(PedidoDto dto) {
+    public PedidoResponseDto create(PedidoRequestDto dto) {
 
         Usuario cliente = usuarioRepository.findById(dto.getIdUser())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
         Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
+        pedido.setIdUser(dto.getIdUser());
         pedido.setMomento(LocalDate.now());
         pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO);
 
@@ -42,8 +51,16 @@ public class PedidoService {
         pagamento.setPedido(pedido);
         pedido.setPagamento(pagamento);
 
+        for (ItemDoPedidoRequestDto itemDto : dto.getItems()) {
+            Produto produto = produtoRepository.findById(itemDto.getProdutoId())
+                    .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+
+            ItemDoPedido item = new ItemDoPedido(pedido, produto, itemDto.getQuantidade(), produto.getPreco());
+            pedido.getItems().add(item);
+        }
+
         pedidoRepository.save(pedido);
 
-        return new PedidoDto(pedido);
+        return new PedidoResponseDto(pedido);
     }
 }

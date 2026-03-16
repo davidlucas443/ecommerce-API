@@ -1,7 +1,9 @@
 package com.senai.ecomerce.controller;
 
 import com.senai.ecomerce.service.PagamentoService;
-import com.senai.ecomerce.dto.PagamentoDto;
+import com.senai.ecomerce.dto.PagamentoRequestDto;
+import com.senai.ecomerce.dto.PagamentoResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,8 @@ public class PagamentoController {
     private PagamentoService pagamentoService;
 
     @PostMapping
-    public ResponseEntity<PagamentoDto> create(@RequestBody PagamentoDto dto){
-        PagamentoDto novoPagamento = pagamentoService.create(dto);
+    public ResponseEntity<PagamentoResponseDto> create(@Valid @RequestBody PagamentoRequestDto dto){
+        PagamentoResponseDto novoPagamento = pagamentoService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPagamento);
     }
 
