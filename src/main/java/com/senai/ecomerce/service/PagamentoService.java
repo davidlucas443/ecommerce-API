@@ -40,8 +40,6 @@ public class PagamentoService {
         Pedido pedido = pedidoRepository.findById(dto.getPedidoId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
 
-        // `Pagamento` usa `@MapsId`, entao o ID do pagamento e o mesmo do pedido.
-        // Se o pedido ja tiver um pagamento persistido, apenas atualizamos (evita violacao de PK).
         Pagamento pagamento = pedido.getPagamento();
         if (pagamento == null) {
             pagamento = new Pagamento();
@@ -59,7 +57,6 @@ public class PagamentoService {
 
     @Transactional
     public PagamentoResponseDto update(UUID id, PagamentoRequestDto dto) {
-        // Em Pagamento (@MapsId), o ID do pagamento deve ser o mesmo do pedido.
         if (!id.equals(dto.getPedidoId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O id da URL deve ser igual ao pedidoId do body");
         }

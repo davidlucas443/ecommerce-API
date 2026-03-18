@@ -6,7 +6,7 @@ import com.senai.ecomerce.service.PedidoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,29 +27,29 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> findAll() {
-        return ResponseEntity.ok(pedidoService.findAll());
+    public List<PedidoResponseDto> findAll() {
+        return pedidoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PedidoResponseDto> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(pedidoService.findById(id));
+    public PedidoResponseDto findById(@PathVariable UUID id) {
+        return pedidoService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<PedidoResponseDto> create(@Valid @RequestBody PedidoRequestDto dto){
-        PedidoResponseDto novoPedido = pedidoService.create(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
+    @ResponseStatus(HttpStatus.CREATED)
+    public PedidoResponseDto create(@Valid @RequestBody PedidoRequestDto dto){
+        return pedidoService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoResponseDto> update(@PathVariable UUID id, @Valid @RequestBody PedidoRequestDto dto) {
-        return ResponseEntity.ok(pedidoService.update(id, dto));
+    public PedidoResponseDto update(@PathVariable UUID id, @Valid @RequestBody PedidoRequestDto dto) {
+        return pedidoService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
         pedidoService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

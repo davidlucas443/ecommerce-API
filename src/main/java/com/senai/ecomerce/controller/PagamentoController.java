@@ -6,7 +6,7 @@ import com.senai.ecomerce.service.PagamentoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,29 +27,29 @@ public class PagamentoController {
     private PagamentoService pagamentoService;
 
     @GetMapping
-    public ResponseEntity<List<PagamentoResponseDto>> findAll() {
-        return ResponseEntity.ok(pagamentoService.findAll());
+    public List<PagamentoResponseDto> findAll() {
+        return pagamentoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PagamentoResponseDto> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(pagamentoService.findById(id));
+    public PagamentoResponseDto findById(@PathVariable UUID id) {
+        return pagamentoService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<PagamentoResponseDto> create(@Valid @RequestBody PagamentoRequestDto dto){
-        PagamentoResponseDto novoPagamento = pagamentoService.create(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoPagamento);
+    @ResponseStatus(HttpStatus.CREATED)
+    public PagamentoResponseDto create(@Valid @RequestBody PagamentoRequestDto dto){
+        return pagamentoService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PagamentoResponseDto> update(@PathVariable UUID id, @Valid @RequestBody PagamentoRequestDto dto) {
-        return ResponseEntity.ok(pagamentoService.update(id, dto));
+    public PagamentoResponseDto update(@PathVariable UUID id, @Valid @RequestBody PagamentoRequestDto dto) {
+        return pagamentoService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
         pagamentoService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
