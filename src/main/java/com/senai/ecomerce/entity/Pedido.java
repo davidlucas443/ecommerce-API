@@ -39,7 +39,7 @@ public class Pedido {
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
-    @OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set< ItemDoPedido> items = new HashSet<>();
 
     public List<Produto> getProduto() {
