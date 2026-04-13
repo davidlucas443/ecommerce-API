@@ -26,28 +26,28 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    @GetMapping
+    @GetMapping("/user/")
     public List<ProdutoResponseDto> findAll() {
         return produtoService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ProdutoResponseDto findById(@PathVariable UUID id) {
         return produtoService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/user/")
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoResponseDto create(@Valid @RequestBody ProdutoRequestDto dto) {
         return produtoService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/{id}")
     public ProdutoResponseDto update(@PathVariable UUID id, @Valid @RequestBody ProdutoRequestDto dto) {
         return produtoService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         produtoService.delete(id);

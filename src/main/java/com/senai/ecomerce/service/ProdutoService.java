@@ -7,6 +7,7 @@ import com.senai.ecomerce.repositories.ProdutoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +19,13 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public ProdutoService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     public List<ProdutoResponseDto> findAll() {
         return produtoRepository.findAll().stream().map(ProdutoResponseDto::new).toList();

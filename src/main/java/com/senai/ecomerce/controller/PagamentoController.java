@@ -26,28 +26,28 @@ public class PagamentoController {
     @Autowired
     private PagamentoService pagamentoService;
 
-    @GetMapping
+    @GetMapping("/user")
     public List<PagamentoResponseDto> findAll() {
         return pagamentoService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public PagamentoResponseDto findById(@PathVariable UUID id) {
         return pagamentoService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public PagamentoResponseDto create(@Valid @RequestBody PagamentoRequestDto dto){
         return pagamentoService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/{id}")
     public PagamentoResponseDto update(@PathVariable UUID id, @Valid @RequestBody PagamentoRequestDto dto) {
         return pagamentoService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         pagamentoService.delete(id);

@@ -26,28 +26,28 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
-    @GetMapping
+    @GetMapping("/user")
     public List<PedidoResponseDto> findAll() {
         return pedidoService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public PedidoResponseDto findById(@PathVariable UUID id) {
         return pedidoService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoResponseDto create(@Valid @RequestBody PedidoRequestDto dto){
         return pedidoService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/{id}")
     public PedidoResponseDto update(@PathVariable UUID id, @Valid @RequestBody PedidoRequestDto dto) {
         return pedidoService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         pedidoService.delete(id);

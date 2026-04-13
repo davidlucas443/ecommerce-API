@@ -8,6 +8,7 @@ import com.senai.ecomerce.repositories.UsuarioRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,6 +20,13 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     public List<UsuarioResponseDto> findAll() {
         return usuarioRepository.findAll().stream().map(UsuarioResponseDto::new).toList();
@@ -37,7 +45,7 @@ public class UsuarioService {
 
         Usuario usuario = new Usuario();
         usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha());
+        usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
         usuario.setNome(dto.getNome());
         usuario.setTelefone(dto.getTelefone());
         usuario.setRoles(Roles.USER);
@@ -58,7 +66,7 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setEmail(emailNovo);
         usuario.setTelefone(dto.getTelefone());
-        usuario.setSenha(dto.getSenha());
+        usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
 
         usuarioRepository.save(usuario);
         return new UsuarioResponseDto(usuario);

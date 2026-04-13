@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @RestController
@@ -26,30 +27,36 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
+    @GetMapping("/user")
     public List<UsuarioResponseDto> findAll() {
         return usuarioService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public UsuarioResponseDto findById(@PathVariable UUID id) {
         return usuarioService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioResponseDto create(@Valid @RequestBody UsuarioRequestDto dto){
         return usuarioService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/{id}")
     public UsuarioResponseDto update(@PathVariable UUID id, @Valid @RequestBody UsuarioRequestDto dto) {
         return usuarioService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         usuarioService.delete(id);
     }
+
+    @GetMapping("/admin")
+    public String admin(){
+        return "Acesso ADMIN";
+    }
+
 }
