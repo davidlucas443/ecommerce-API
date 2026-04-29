@@ -15,7 +15,7 @@ O projeto usa UUID como identificador das entidades principais.
 
 ## Stack utilizada
 
-- Java 21
+- Java 17+
 - Spring Boot 3.3.5
 - Spring Web
 - Spring Data JPA
@@ -85,7 +85,7 @@ src/main/java/com/senai/ecomerce
 
 ## Pre-requisitos
 
-- JDK 21 instalado
+- JDK 17+ instalado
 - `JAVA_HOME` configurado corretamente
 - MySQL acessivel com os dados definidos em `src/main/resources/application.properties`
 
