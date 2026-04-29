@@ -10,7 +10,6 @@ import com.senai.ecomerce.repositories.PedidoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,12 +24,6 @@ public class PagamentoService {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
-
-    private final PasswordEncoder passwordEncoder;
-
-    public PagamentoService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public List<PagamentoResponseDto> findAll() {
         return pagamentoRepository.findAll().stream().map(PagamentoResponseDto::new).toList();

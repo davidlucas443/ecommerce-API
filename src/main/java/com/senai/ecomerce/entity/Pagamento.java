@@ -22,6 +22,7 @@ public class Pagamento {
     private LocalDate momento;
 
     @OneToOne
+    @JoinColumn(name = "id")
     @MapsId //Faz com que o id do pedido seja o mesmo do pagamento
     private Pedido pedido;
 }

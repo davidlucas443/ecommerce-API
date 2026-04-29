@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class    Usuario {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
