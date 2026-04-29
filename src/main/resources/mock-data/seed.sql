@@ -1,8 +1,6 @@
 -- Mock seed data (UUIDs fixos) para MySQL.
 -- Ordem pensada para respeitar FKs comuns: usuario -> pedido -> itens/pagamento e produto/categoria -> join tables.
 
-START TRANSACTION;
-
 -- USUARIO
 -- Senha dos usuarios seedados: password
 INSERT INTO usuario (id, nome, email, telefone, senha, roles) VALUES
@@ -57,5 +55,4 @@ INSERT INTO tb_pedido_item (pedido_id, produto_id, quantidade, preco) VALUES
 INSERT INTO pagamento (id, momento) VALUES
 ('d1111111-1111-1111-1111-111111111111', '2026-04-10');
 
-COMMIT;
 
