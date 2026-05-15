@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +22,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PhotoService photoService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -38,7 +43,17 @@ public class UsuarioService {
         return new UsuarioResponseDto(usuario);
     }
 
-    public UsuarioResponseDto create(UsuarioRequestDto dto){
+    public UsuarioResponseDto create(UsuarioRequestDto dto) throws IOException {
+        String photoPath = null;
+        MultipartFile photo = dto.getPhoto();
+        if (photo != null && !photo.isEmpty()) {
+            photoPath = photoService.savePhoto(photo);
+        }
+
+        return createUsuario(dto, photoPath);
+    }
+
+    private UsuarioResponseDto createUsuario(UsuarioRequestDto dto, String photoPath) {
         if (usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
@@ -49,6 +64,7 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setTelefone(dto.getTelefone());
         usuario.setRoles(Roles.USER);
+        usuario.setPhoto(photoPath);
 
         usuarioRepository.save(usuario);
         return new UsuarioResponseDto(usuario);

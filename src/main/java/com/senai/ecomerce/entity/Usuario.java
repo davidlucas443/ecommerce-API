@@ -38,4 +38,6 @@ public class    Usuario {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
+    private String photo;
+
 }

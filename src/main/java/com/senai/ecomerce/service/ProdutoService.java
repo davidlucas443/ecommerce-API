@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +21,9 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private PhotoService photoService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -37,26 +42,37 @@ public class ProdutoService {
         return new ProdutoResponseDto(produto);
     }
 
-    public ProdutoResponseDto create(ProdutoRequestDto dto) {
+    public ProdutoResponseDto create(ProdutoRequestDto dto) throws IOException {
         Produto produto = new Produto();
         produto.setDescricao(dto.getDescricao());
         produto.setPreco(dto.getPreco());
-        produto.setImgUrl(dto.getImgUrl());
+        produto.setImgUrl(getImgUrl(dto));
 
         produtoRepository.save(produto);
         return new ProdutoResponseDto(produto);
     }
 
-    public ProdutoResponseDto update(UUID id, ProdutoRequestDto dto) {
+    public ProdutoResponseDto update(UUID id, ProdutoRequestDto dto) throws IOException {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
         produto.setDescricao(dto.getDescricao());
         produto.setPreco(dto.getPreco());
-        produto.setImgUrl(dto.getImgUrl());
+        String imgUrl = getImgUrl(dto);
+        if (imgUrl != null) {
+            produto.setImgUrl(imgUrl);
+        }
 
         produtoRepository.save(produto);
         return new ProdutoResponseDto(produto);
+    }
+
+    private String getImgUrl(ProdutoRequestDto dto) throws IOException {
+        MultipartFile photo = dto.getPhoto();
+        if (photo != null && !photo.isEmpty()) {
+            return photoService.savePhoto(photo);
+        }
+        return dto.getImgUrl();
     }
 
     public void delete(UUID id) {
