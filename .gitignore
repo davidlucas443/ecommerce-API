@@ -34,3 +34,7 @@ build/
 
 # Local env files (keep secrets out of git)
 .env
+
+# Local runtime files
+data/
+upload/
